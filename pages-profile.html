@@ -304,8 +304,8 @@
 <div class="wrapper">
     <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="sideBar.html">
-                <span class="align-middle">AdminKit</span>
+            <a class="sidebar-brand" href="index.html">
+                <span class="align-middle">Admin</span>
             </a>
 
             <ul class="sidebar-nav">
@@ -341,53 +341,6 @@
                 <li class="sidebar-item active">
                     <a class="sidebar-link" href="pages-profile.html">
                         <i class="align-middle" data-feather="user"></i> <span class="align-middle">Employees</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="sideBar.html">
-                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-sign-in.html">
-                        <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-sign-up.html">
-                        <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-header">
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="ui-buttons.html">
-                        <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="ui-cards.html">
-                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-header">
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="charts-chartjs.html">
-                        <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="maps-google.html">
-                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
                     </a>
                 </li>
             </ul>
@@ -455,13 +408,13 @@
                                 <label>email</label>
                                 <input id="email" type="email" class="form-control" required>
                                 <label>profession</label>
-                                <input id="profession" type="email" class="form-control" required>
+                                <input id="profession" type="text" class="form-control" required>
                                 <label>about</label>
-                                <input id="about" type="email" class="form-control" required>
+                                <input id="about" type="text" class="form-control" required>
                                 <label>achievement</label>
-                                <input id="achievement" type="email" class="form-control" required>
+                                <input id="achievement" type="text" class="form-control" required>
                                 <label>myObjective</label>
-                                <input id="myObjective" type="email" class="form-control" required>
+                                <input id="myObjective" type="text" class="form-control" required>
                                 <label>birthday</label>
                                 <input id="birthday" type="text" class="form-control" required placeholder="2023-06-23">
                                 <div class="form-group">
@@ -516,13 +469,13 @@
                                 <label>email</label>
                                 <input id="email1" type="email" class="form-control" >
                                 <label>profession</label>
-                                <input id="profession1" type="email" class="form-control">
+                                <input id="profession1" type="text" class="form-control">
                                 <label>about</label>
-                                <input id="about1" type="email" class="form-control">
+                                <input id="about1" type="text" class="form-control">
                                 <label>achievement</label>
-                                <input id="achievement1" type="email" class="form-control" >
+                                <input id="achievement1" type="text" class="form-control" >
                                 <label>myObjective</label>
-                                <input id="myObjective1" type="email" class="form-control">
+                                <input id="myObjective1" type="text" class="form-control">
                                 <label>birthday</label>
                                 <input id="birthday1" type="text" class="form-control"  placeholder="2023-06-23">
                                 <div class="form-group">
@@ -754,12 +707,16 @@
             }
             let token = localStorage.getItem('access_token');
             const formData = new FormData();
+            console.log("picture")
+            console.log(document.getElementById("myFile1").files[0])
             formData.append("name", document.getElementById("name1").value);
             formData.append("username", document.getElementById("username1").value);
             formData.append("password", document.getElementById("password1").value);
             formData.append("email", document.getElementById("email1").value);
             formData.append("birthday", document.getElementById("birthday1").value);
-            formData.append("picture", document.getElementById("myFile1").files[0]);
+            if (document.getElementById("myFile1").files[0]!==undefined){
+                formData.append("picture", document.getElementById("myFile1").files[0]);
+            }
             formData.append("profession", document.getElementById("profession1").value);
             formData.append("about", document.getElementById("about").value);
             formData.append("achievement", document.getElementById("achievement").value);

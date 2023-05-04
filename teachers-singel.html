@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -137,7 +137,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a href="index-2.html">Home</a>
+                                    <a href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -290,86 +290,8 @@
                         <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
                             <div class="courses-cont pt-20">
                                 <div class="row" id="course-foreach">
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="singel-course mt-30">-->
-<!--                                            <div class="thum">-->
-<!--                                                <div class="image">-->
-<!--                                                    <img src="images/course/cu-2.jpg" alt="Course">-->
-<!--                                                </div>-->
-<!--                                                <div class="price">-->
-<!--                                                    <span>$10</span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="cont border">-->
-<!--                                                <ul>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                </ul>-->
-<!--                                                <span>(20 Reviws)</span>-->
-<!--                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>-->
-<!--                                                <div class="course-teacher">-->
-<!--                                                    <div class="thum">-->
-<!--                                                        <a href="#"><img src="images/course/teacher/t-2.jpg"-->
-<!--                                                                         alt="teacher"></a>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="name">-->
-<!--                                                        <a href="#"><h6>Mark anthem</h6></a>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="admin">-->
-<!--                                                        <ul>-->
-<!--                                                            <li><a href="#"><i-->
-<!--                                                                    class="fa fa-user"></i><span>31</span></a></li>-->
-<!--                                                            <li><a href="#"><i-->
-<!--                                                                    class="fa fa-heart"></i><span>10</span></a></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div> &lt;!&ndash; singel course &ndash;&gt;-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="singel-course mt-30">-->
-<!--                                            <div class="thum">-->
-<!--                                                <div class="image">-->
-<!--                                                    <img src="images/course/cu-3.jpg" alt="Course">-->
-<!--                                                </div>-->
-<!--                                                <div class="price">-->
-<!--                                                    <span>$30</span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="cont border">-->
-<!--                                                <ul>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                    <li><i class="fa fa-star"></i></li>-->
-<!--                                                </ul>-->
-<!--                                                <span>(20 Reviws)</span>-->
-<!--                                                <a href="#"><h4>Learn basis javascirpt from start for beginner</h4></a>-->
-<!--                                                <div class="course-teacher">-->
-<!--                                                    <div class="thum">-->
-<!--                                                        <a href="#"><img src="images/course/teacher/t-2.jpg"-->
-<!--                                                                         alt="teacher"></a>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="name">-->
-<!--                                                        <a href="#"><h6>Mark anthem</h6></a>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="admin">-->
-<!--                                                        <ul>-->
-<!--                                                            <li><a href="#"><i-->
-<!--                                                                    class="fa fa-user"></i><span>31</span></a></li>-->
-<!--                                                            <li><a href="#"><i-->
-<!--                                                                    class="fa fa-heart"></i><span>10</span></a></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div> &lt;!&ndash; singel course &ndash;&gt;-->
-<!--                                    </div>-->
+
+
                                 </div> <!-- row -->
                             </div> <!-- courses cont -->
                         </div>
@@ -469,7 +391,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -613,6 +535,17 @@
             // <img src="images/course/cu-1.jpg" alt="Course">
             for (key in dataJson.data) {
                 const course = dataJson.data[key];
+                let realTeacher;
+                for(index11 in course.teacher){
+                    let oneHuman=course.teacher[index11];
+                    const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+                        return checkTeacher.includes("TEACHER");
+                    });
+                    if (hasTrue){
+                        realTeacher=oneHuman;
+                    }
+                }
+
                 const col = document.createElement('div');
                 col.classList.add('col-lg-4', 'col-md-6');
 
@@ -626,7 +559,7 @@
                 image.classList.add('image');
                 const img = document.createElement('img');
 
-                img.src = '../static/images/'+course.teacher[0].picture;
+                img.src = 'http://localhost:8080/api/image/'+course.image;
                 img.alt = 'course-Avatar';
                 image.appendChild(img);
 
@@ -673,7 +606,7 @@
                 const teacherImg = document.createElement('img');
                 // teacherImg.src = course.teacher.picture;
                 // teacherImg.src = 'images/course/teacher/t-1.jpg';
-                teacherImg.src = '../static/images/'+course.teacher[0].picture;
+                teacherImg.src = 'http://localhost:8080/api/image/'+realTeacher.picture;
                 teacherImg.alt = 'avatar';
                 teacherThum.appendChild(teacherImg);
 
@@ -681,7 +614,7 @@
                 teacherName.classList.add('name');
                 const teacherNameLink = document.createElement('a');
                 const teacherNameH6 = document.createElement('h6');
-                teacherNameH6.textContent = course.teacher[0].name;
+                teacherNameH6.textContent = realTeacher.name;
                 teacherNameLink.appendChild(teacherNameH6);
                 teacherName.appendChild(teacherNameLink);
 
@@ -740,7 +673,7 @@
         .then((dataJson) => {
             console.log(dataJson);
             let pic = document.getElementById('teacherPic');
-            pic.innerHTML = `<img src="../static/images/${dataJson.data.picture}" alt="Teachers" >`;
+            pic.innerHTML = `<img src="http://localhost:8080/api/image/${dataJson.data.picture}" alt="Teachers" >`;
             document.getElementById('teacherName').innerHTML = dataJson.data.name;
             document.getElementById('teacherProfession').innerHTML = dataJson.data.profession;
             document.getElementById('teacherAbout').innerHTML = dataJson.data.about;
@@ -748,37 +681,28 @@
             document.getElementById('teacherObjective').innerHTML = dataJson.data.myObjective;
 
             let socialMedias = document.getElementById('teacherSocials');
-            let socialIcon = "";
 
             let teacherSocialMedia = dataJson.data.socialMedia;
             console.log("keldi")
             console.log(teacherSocialMedia)
-            // if (teacherSocialMedia.facebook.includes('facebook')) {
-            //     socialIcon += `<li><a href="`+teacherSocialMedia.facebook+`"><i class="fa fa-facebook-square"></i></a></li>`;
-            // }
-            // if (teacherSocialMedia.twitter.includes('twitter')) {
-            //     socialIcon += ` <li><a href="`+teacherSocialMedia.twitter+`"><i class="fa fa-twitter-square"></i></a></li>`;
-            // }
-            // if (teacherSocialMedia.google.includes('google')) {
-            //     socialIcon += ` <li><a href="`+teacherSocialMedia.google+`"><i class="fa fa-google-plus-square"></i></a></li>`;
-            // }
-            // if (teacherSocialMedia.linkedIn.includes('linkedIn')) {
-            //     socialIcon += ` <li><a href="`+teacherSocialMedia.linkedIn+`"><i class="fa fa-linkedin-square"></i></a></li>`;
-            // }
+
             let socialLinks = [
-                {name: "facebook", link:  teacherSocialMedia.facebook},
+                {name: "facebook", link:  teacherSocialMedia && teacherSocialMedia.facebook},
                 {name: "twitter", link: teacherSocialMedia && teacherSocialMedia.twitter},
-                {name: "google", link:  teacherSocialMedia.google},
+                {name: "google", link:  teacherSocialMedia && teacherSocialMedia.google},
+                {name: "telegram", link:  teacherSocialMedia && teacherSocialMedia.telegram},
+                {name: "linkedIn", link:  teacherSocialMedia && teacherSocialMedia.linkedIn},
                 {name: "instagram", link: teacherSocialMedia && teacherSocialMedia.instagram}
             ];
 
             let socialIcons = "";
+            console.log(socialLinks)
             for (let i = 0; i < socialLinks.length; i++) {
                 if (socialLinks[i].link !== null) {
                     socialIcons += `<li><a href="${socialLinks[i].link}"><i class="fa fa-${socialLinks[i].name}"></i></a></li>`;
                 }
             }
-            socialMedias.innerHTML = `<ul class="social">${socialIcon}</ul>`;
+            socialMedias.innerHTML = `<ul class="social">${socialIcons}</ul>`;
 
             let temp4 = document.getElementById("comments");
             let str4 = "<ul>";
@@ -789,7 +713,7 @@
                       <div class="singel-reviews">
                         <div class="reviews-author">
                           <div class="author-thum">
-<!--                            <img src="../static/images/${array[key1]}" alt="Reviews">-->
+                            <img src="images/unknown.png" width="35px" height="35px" alt="Reviews">
                           </div>
                           <div class="author-name">
                             <h6>${array[key1].personName}</h6>
@@ -799,14 +723,6 @@
                         <div class="reviews-description pt-20">
                           <p>${array[key1].text}.</p>
                           <div class="rating">
-                            <ul>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                            </ul>
-                            <span>/ 5 Star</span>
                           </div>
                         </div>
                       </div> <!-- singel reviews -->

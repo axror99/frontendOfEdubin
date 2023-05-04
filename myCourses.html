@@ -92,7 +92,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -134,7 +134,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a  href="index-2.html">Home</a>
+                                    <a  href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -326,7 +326,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -453,6 +453,18 @@
                 // <img src="images/course/cu-1.jpg" alt="Course">
                 for (key in dataJson.data.courses) {
                     const course = dataJson.data.courses[key];
+
+                    let realTeacher;
+                    for(index11 in course.teacher){
+                        let oneHuman=course.teacher[index11];
+                        const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+                            return checkTeacher.includes("TEACHER");
+                        });
+                        if (hasTrue){
+                            realTeacher=oneHuman;
+                        }
+                    }
+
                     const col = document.createElement('div');
                     col.classList.add('col-lg-4', 'col-md-6');
 
@@ -468,7 +480,7 @@
 
                     // img.src = '../static/images/'+course.image;
                     // <img src="../static/images/${res.data.teacher.picture}"
-                    img.src = '../static/images/'+course.image;
+                    img.src = 'http://localhost:8080/api/image/'+course.image;
                     img.alt = 'course-Avatar';
                     image.appendChild(img);
 
@@ -511,7 +523,7 @@
                     const teacherImg = document.createElement('img');
                     // teacherImg.src = course.teacher.picture;
                     // teacherImg.src = 'images/course/teacher/t-1.jpg';
-                    teacherImg.src = '../static/images/'+course.teacher[0].picture;
+                    teacherImg.src = 'http://localhost:8080/api/image/'+realTeacher.picture;
                     teacherImg.alt = 'avatar';
                     teacherThum.appendChild(teacherImg);
 
@@ -519,7 +531,7 @@
                     teacherName.classList.add('name');
                     const teacherNameLink = document.createElement('a');
                     const teacherNameH6 = document.createElement('h6');
-                    teacherNameH6.textContent = course.teacher[0].name;
+                    teacherNameH6.textContent = realTeacher.name;
                     teacherNameLink.appendChild(teacherNameH6);
                     teacherName.appendChild(teacherNameLink);
 
@@ -583,7 +595,7 @@
 
                     // create image element with src attribute
                     const img = document.createElement("img");
-                    img.src = '../static/images/'+product.picture;
+                    img.src = 'http://localhost:8080/api/image/'+product.picture;
                     img.width=280;
                     img.height=280;
                     img.alt = "Publication";
@@ -666,7 +678,7 @@
         const token = localStorage.getItem('access_token');
         if (token) {
             localStorage.removeItem('access_token');
-            window.location.href = 'index-2.html';
+            window.location.href = 'index.html';
         }
     }
 </script>

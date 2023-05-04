@@ -97,7 +97,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -138,7 +138,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a href="index-2.html">Home</a>
+                                    <a href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -319,7 +319,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -431,7 +431,12 @@
             if (categoryID === 0) {
                 categoryName = dataJson.data[categoryID].name;
             } else {
-                categoryName = dataJson.data[categoryID - 1].name;
+                for (index22 in dataJson.data){
+                    if (dataJson.data[index22].id===categoryID){
+                        categoryName = dataJson.data[categoryID - 1].name;
+                        break;
+                    }
+                }
             }
             let categoryList = document.getElementById('category-foreach');
             for (let i = 0; i < dataJson.data.length; i++) {
@@ -465,7 +470,6 @@
                 // console.log(toImage);
 
                 let str2 = 'http://localhost:8080/api/image/' + oneBlog.picture;
-                let str3 = 'http://localhost:8080/api/image/' + oneBlog.picture;
 
                 imgTag.setAttribute('src', str2);
                 imgTag.setAttribute('width', "92px");
@@ -516,10 +520,6 @@
             // console.log('blogList = ' + blogList)
             for (let i = 0; i < blogList.length; i++) {
                 const blog = blogList[i];
-                // console.log('blog = ' + blog)
-                // console.log(blog.picture);
-                // Create the elements
-                // create the main div
                 const div = document.createElement("div");
                 div.classList.add("singel-blog", "mt-30");
 
@@ -528,7 +528,7 @@
                 blogThumDiv.classList.add("blog-thum");
 
                 const img = document.createElement("img");
-                img.src = "../static/images/" + blog.picture;
+                img.src = "http://localhost:8080/api/image/" + blog.picture;
                 img.alt = "Blog";
 
                 blogThumDiv.appendChild(img);

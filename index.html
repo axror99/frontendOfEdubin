@@ -95,7 +95,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4">
                         <div class="logo">
-                            <a href="index-2.html">
+                            <a href="index.html">
                                 <img src="images/logo.png" alt="Logo">
                             </a>
                         </div>
@@ -134,7 +134,7 @@
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav mr-auto">
                                     <li class="nav-item">
-                                        <a class="active" href="index-2.html">Home</a>
+                                        <a class="active" href="index.html">Home</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="about.html">About us</a>
@@ -582,7 +582,7 @@
                                 <h6>Sitemap</h6>
                             </div>
                             <ul>
-                                <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                                <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                                 <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                                 <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                                 <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -762,6 +762,16 @@
                 // <img src="images/course/cu-1.jpg" alt="Course">
                 for (key in dataJson.data) {
                     const course = dataJson.data[key];
+                    let realTeacher;
+                    for(index11 in course.teacher){
+                        let oneHuman=course.teacher[index11];
+                        const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+                            return checkTeacher.includes("TEACHER");
+                        });
+                        if (hasTrue){
+                            realTeacher=oneHuman;
+                        }
+                    }
                     const col = document.createElement('div');
                     col.classList.add('col-lg-4');
 
@@ -777,7 +787,7 @@
 
 
 
-                    img.src = '../static/images/'+course.image;
+                    img.src = 'http://localhost:8080/api/image/'+course.image;
                     img.alt = 'course-Avatar';
                     img.height="277";
                     img.width="370";
@@ -824,7 +834,7 @@
                     const teacherThum = document.createElement('div');
                     teacherThum.classList.add('thum');
                     const teacherImg = document.createElement('img');
-                    teacherImg.src = '../static/images/'+course.teacher[0].picture;
+                    teacherImg.src = 'http://localhost:8080/api/image/'+realTeacher.picture;
                     teacherImg.alt = 'avatar';
                     teacherThum.appendChild(teacherImg);
 
@@ -832,7 +842,7 @@
                     teacherName.classList.add('name');
                     const teacherNameLink = document.createElement('a');
                     const teacherNameH6 = document.createElement('h6');
-                    teacherNameH6.textContent = course.teacher[0].name;
+                    teacherNameH6.textContent = realTeacher.name;
                     teacherNameLink.appendChild(teacherNameH6);
                     teacherName.appendChild(teacherNameLink);
 
@@ -907,7 +917,7 @@
                 thumDiv.setAttribute('class', 'news-thum pb-25');
 
                 const imgElem = document.createElement('img');
-                imgElem.setAttribute('src', '../static/images/'+oneBLOG.picture);
+                imgElem.setAttribute('src', 'http://localhost:8080/api/image/'+oneBLOG.picture);
                 imgElem.setAttribute('alt', 'News');
 
                 thumDiv.appendChild(imgElem);
@@ -981,7 +991,7 @@
                     col1Div.setAttribute("class", "col-sm-4");
 
                     let img = document.createElement("img");
-                    img.setAttribute("src", '../static/images/'+oneBlog.picture);
+                    img.setAttribute("src", 'http://localhost:8080/api/image/'+oneBlog.picture);
                     img.setAttribute("alt", "News");
 
                     let newsThumDiv = document.createElement("div");

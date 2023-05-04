@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -137,7 +137,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a  href="index-2.html">Home</a>
+                                    <a  href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -289,7 +289,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -403,7 +403,7 @@
                 const div3 = document.createElement("div");
                 div3.className = "event-thum";
                 const img = document.createElement("img");
-                img.src = "../static/images/"+event.picture;
+                img.src = "http://localhost:8080/api/image/"+event.picture;
                 // img.src = "images/event/e-1.jpg";
                 img.width=100;
                 img.height=150;

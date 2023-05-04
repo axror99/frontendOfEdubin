@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -139,7 +139,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a  href="index-2.html">Home</a>
+                                    <a  href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -471,7 +471,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -578,22 +578,30 @@
         const res = JSON.parse(req.responseText);
         console.log(res.data);
 
+        let realTeacher ;
+        for (index1 in res.data.teacher){
+            let oneTeacher = res.data.teacher[index1];
+            if (oneTeacher.roles.includes("TEACHER")){
+                realTeacher=oneTeacher;
+                break;
+            }
+        }
         document.getElementById("summery").innerHTML = res.data.courseSummery;
         document.getElementById("requirement").innerHTML = res.data.requirements;
         document.getElementById("course").innerHTML = res.data.name;
-        document.getElementById("teacher").innerHTML = res.data.teacher[0].name;
+        document.getElementById("teacher").innerHTML = realTeacher.name;
         document.getElementById("category").innerHTML = res.data.category.name;
         document.getElementById("headline").innerHTML = res.data.headline;
         document.getElementById("headline1").innerHTML = res.data.headline;
         document.getElementById("definition").innerHTML = res.data.definition;
-        document.getElementById("teacher-object").innerHTML = res.data.teacher[0].myObjective;
+        document.getElementById("teacher-object").innerHTML = realTeacher.myObjective;
         document.getElementById("course-price").innerHTML = res.data.price;
         document.getElementById("courseStudent").innerHTML = res.data.teacher.length - 1;
         document.getElementById("courseLecture").innerHTML = res.data.contents.length;
         let pic = document.getElementById("coursePicture");
-        pic.innerHTML = `<img src="../static/images/${res.data.image}" width="670px" height="450px" alt="Course" >`;
+        pic.innerHTML = `<img src="http://localhost:8080/api/image/${res.data.image}" width="670px" height="450px" alt="Course" >`;
         let teachPic = document.getElementById("teacherPic");
-        teachPic.innerHTML = `<img src="../static/images/${res.data.teacher[0].picture}"width="40px" height="40px" alt="Course" >`;
+        teachPic.innerHTML = `<img src="http://localhost:8080/api/image/${realTeacher.picture}"width="40px" height="40px" alt="Course" >`;
 
 
         window.localTeacherId = res.data.id;
@@ -603,14 +611,14 @@
         document.getElementById("price").setAttribute("myCourseId", res.data.price);
 
         let temp3 = document.getElementById("teacher-foto");
-        temp3.innerHTML = `<img src="../static/images/${res.data.teacher[0].picture}" width="170px" height="140px" alt="Instructor">`
+        temp3.innerHTML = `<img src="http://localhost:8080/api/image/${realTeacher.picture}" width="170px" height="140px" alt="Instructor">`
 
         let temp2 = document.getElementById("teacher-link");
         let socialLinks = [
-            {name: "facebook", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.facebook},
-            {name: "twitter", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.twitter},
-            {name: "google", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.google},
-            {name: "instagram", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.instagram}
+            {name: "facebook", link: realTeacher.socialMedia && realTeacher.socialMedia.facebook},
+            {name: "twitter", link: realTeacher.socialMedia && realTeacher.socialMedia.twitter},
+            {name: "google", link: realTeacher.socialMedia && realTeacher.socialMedia.google},
+            {name: "instagram", link: realTeacher.socialMedia && realTeacher.socialMedia.instagram}
         ];
 
 // Generate the social media icons based on the links
@@ -623,8 +631,8 @@
 
 
         temp2.innerHTML = `
-    <a id="teacherID" href="teachers-singel.html?teacherId=${res.data.teacher[0].id}"><h5>${res.data.teacher[0].name}</h5></a>
-    <span>${res.data.teacher[0].profession}</span>
+    <a id="teacherID" href="teachers-singel.html?teacherId=${realTeacher.id}"><h5>${realTeacher.name}</h5></a>
+    <span>${realTeacher.profession}</span>
     <ul class="social">
         ${socialIcons}
     </ul>
@@ -728,6 +736,16 @@
             console.log(mySet)
             for (let indexNumber of mySet ) {
                 const recommendCourse = dataJson.data[indexNumber];
+                let recTeacher ;
+                for(index11 in recommendCourse.teacher){
+                    let oneHuman=recommendCourse.teacher[index11];
+                    const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+                        return checkTeacher.includes("TEACHER");
+                    });
+                    if (hasTrue){
+                        recTeacher=oneHuman;
+                    }
+                }
                 if (count<3) {
                     var outerDiv = document.createElement("div");
                     outerDiv.classList.add("singel-makelike", "mt-20");
@@ -735,7 +753,7 @@
                     var imageDiv = document.createElement("div");
                     imageDiv.classList.add("image");
                     var image = document.createElement("img");
-                    let picture = '../static/images/'+recommendCourse.image;
+                    let picture = 'http://localhost:8080/api/image/'+recommendCourse.image;
 
                     image.src= picture;
                     image.width=140;
@@ -792,7 +810,7 @@
                     image.classList.add('image');
                     const img = document.createElement('img');
 
-                    img.src = '../static/images/'+recommendCourse.image;
+                    img.src = 'http://localhost:8080/api/image/'+recommendCourse.image;
                     img.alt = 'course-Avatar';
                     img.height=277;
                     img.width=370;
@@ -839,7 +857,7 @@
                     const teacherThum = document.createElement('div');
                     teacherThum.classList.add('thum');
                     const teacherImg = document.createElement('img');
-                    teacherImg.src = '../static/images/'+recommendCourse.teacher[0].picture;
+                    teacherImg.src = 'http://localhost:8080/api/image/'+recTeacher.picture;
                     teacherImg.alt = 'avatar';
                     teacherThum.appendChild(teacherImg);
 
@@ -847,7 +865,7 @@
                     teacherName.classList.add('name');
                     const teacherNameLink = document.createElement('a');
                     const teacherNameH6 = document.createElement('h6');
-                    teacherNameH6.textContent = recommendCourse.teacher[0].name;
+                    teacherNameH6.textContent = recTeacher.name;
                     teacherNameLink.appendChild(teacherNameH6);
                     teacherName.appendChild(teacherNameLink);
 

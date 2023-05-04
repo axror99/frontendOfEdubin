@@ -78,7 +78,8 @@
                 <div class="col-lg-6">
                     <div class="header-contact text-lg-left text-center">
                         <ul>
-                            <li><img src="images/all-icon/map.png" alt="icon"><span>3-home, Beruniy street, Tashkent</span></li>
+                            <li><img src="images/all-icon/map.png"
+                                     alt="icon"><span>3-home, Beruniy street, Tashkent</span></li>
                             <li><img src="images/all-icon/email.png" alt="icon"><span>ahror060799@gmail.com</span></li>
                         </ul>
                     </div>
@@ -97,7 +98,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -114,7 +115,7 @@
                             </div>
                         </div>
                         <div class="button float-left">
-<!--                            <a href="#" class="main-btn">Apply Now</a>-->
+                            <!--                            <a href="#" class="main-btn">Apply Now</a>-->
                         </div>
                     </div>
                 </div>
@@ -138,14 +139,14 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a href="index-2.html">Home</a>
+                                    <a href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
                                     <a href="about.html">About us</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="active"  href="courses.html">Courses</a>
+                                    <a class="active" href="courses.html">Courses</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -320,7 +321,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -416,20 +417,32 @@
 <script>
     let urlParams = new URLSearchParams(window.location.search);
     let pageID = urlParams.get("pageID");
-    if (pageID===undefined || pageID===null){
-        pageID=1;
+    if (pageID === undefined || pageID === null) {
+        pageID = 1;
     }
-    fetch('http://localhost:8080/api/course/list/page/'+pageID)
+    fetch('http://localhost:8080/api/course/list/page/' + pageID)
         .then((data) => {
             return data.json()
         })
         .then((dataJson) => {
             console.log(dataJson);
-            const coursesGridRow =document.getElementById("course-foreach");
+            const coursesGridRow = document.getElementById("course-foreach");
 
             // <img src="images/course/cu-1.jpg" alt="Course">
+
             for (key in dataJson.data) {
                 const course = dataJson.data[key];
+                let realTeacher;
+                for(index11 in course.teacher){
+                    let oneHuman=course.teacher[index11];
+                  const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+                        return checkTeacher.includes("TEACHER");
+                    });
+                  if (hasTrue){
+                      realTeacher=oneHuman;
+                  }
+                }
+
                 const col = document.createElement('div');
                 col.classList.add('col-lg-4', 'col-md-6');
 
@@ -446,19 +459,19 @@
                 // img.src = '../static/images/'+course.image;
                 // <img src="../static/images/${res.data.teacher.picture}"
 
-                img.src = '../static/images/'+course.image;
+                img.src = 'http://localhost:8080/api/image/' + course.image;
                 img.alt = 'course-Avatar';
-                img.height="277";
-                img.width="370";
+                img.height = "277";
+                img.width = "370";
                 image.appendChild(img);
 
                 const price = document.createElement('div');
                 price.classList.add('price');
                 const span = document.createElement('span');
-                if (course.price===null){
-                    span.textContent= 'Free';
-                }else{
-                    span.textContent = '$'+course.price;
+                if (course.price === null) {
+                    span.textContent = 'Free';
+                } else {
+                    span.textContent = '$' + course.price;
                 }
                 price.appendChild(span);
 
@@ -482,7 +495,7 @@
 
                 const titleLink = document.createElement('a');
                 // titleLink.href = course.link;
-                titleLink.href = 'courses-singel.html?courseId='+course.id;
+                titleLink.href = 'courses-singel.html?courseId=' + course.id;
                 const title = document.createElement('h4');
                 title.textContent = course.name;
                 titleLink.appendChild(title);
@@ -493,7 +506,7 @@
                 const teacherThum = document.createElement('div');
                 teacherThum.classList.add('thum');
                 const teacherImg = document.createElement('img');
-                teacherImg.src = '../static/images/'+course.teacher[0].picture;
+                teacherImg.src = 'http://localhost:8080/api/image/' + realTeacher.picture;
                 teacherImg.alt = 'avatar';
                 teacherThum.appendChild(teacherImg);
 
@@ -501,7 +514,7 @@
                 teacherName.classList.add('name');
                 const teacherNameLink = document.createElement('a');
                 const teacherNameH6 = document.createElement('h6');
-                teacherNameH6.textContent = course.teacher[0].name;
+                teacherNameH6.textContent = realTeacher.name;
                 teacherNameLink.appendChild(teacherNameH6);
                 teacherName.appendChild(teacherNameLink);
 
@@ -515,7 +528,7 @@
                 studentsCountIcon.classList.add('fa', 'fa-user');
                 const studentsCountSpan = document.createElement('span');
                 // studentsCountSpan.textContent = course.users;
-                studentsCountSpan.textContent = course.teacher.length-1;
+                studentsCountSpan.textContent = course.teacher.length - 1;
                 studentsCountLink.appendChild(studentsCountIcon);
                 studentsCountLink.appendChild(studentsCountSpan);
                 studentsCountLi.appendChild(studentsCountLink);
@@ -549,9 +562,9 @@
                 coursesGridRow.appendChild(col);
             }
         })
-        .catch((err) => {
-            console.log(err)
-        })
+        // .catch((err) => {
+        //     console.log(err)
+        // })
 </script>
 
 

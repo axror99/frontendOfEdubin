@@ -58,8 +58,8 @@
 <div class="wrapper">
     <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="sideBar.html">
-                <span class="align-middle">Admin Profile</span>
+            <a class="sidebar-brand" href="index.html">
+                <span class="align-middle">Admin</span>
             </a>
 
             <ul class="sidebar-nav">
@@ -77,76 +77,30 @@
                         <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Courses</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item ">
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="crud-events.html">
-                        <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Event</span>
+                        <i class="align-middle" data-feather="check-square"></i> <span
+                            class="align-middle">Events</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item active">
                     <a class="sidebar-link" href="crud-blogs.html">
-                        <i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Blogs</span>
+                        <i class="align-middle" data-feather="align-left"></i> <span
+                            class="align-middle">Blogs</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="sideBar.html">
-                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                    </a>
-                </li>
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="pages-profile.html">
-                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-sign-in.html">
-                        <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-sign-up.html">
-                        <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-header">
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="ui-buttons.html">
-                        <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="ui-cards.html">
-                        <i class="align-middle" data-feather="grid"></i> <span class="align-middle">Cards</span>
-                    </a>
-                </li>
-
-
-                <li class="sidebar-header">
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="charts-chartjs.html">
-                        <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="maps-google.html">
-                        <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Employees</span>
                     </a>
                 </li>
             </ul>
         </div>
     </nav>
+
 
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -193,7 +147,7 @@
             const div3 = document.createElement("div");
             div3.className = "event-thum";
             const img = document.createElement("img");
-            img.src = "../static/images/" + blog.picture;
+            img.src = "http://localhost:8080/api/image/" + blog.picture;
             // img.src = "images/event/e-1.jpg";
             img.width = 100;
             img.height = 150;
@@ -299,7 +253,7 @@
                     const div3 = document.createElement("div");
                     div3.className = "event-thum";
                     const img = document.createElement("img");
-                    img.src = "../static/images/" + event.picture;
+                    img.src = "http://localhost:8080/api/image/" + event.picture;
                     // img.src = "images/event/e-1.jpg";
                     img.width = 100;
                     img.height = 150;

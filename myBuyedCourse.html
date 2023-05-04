@@ -98,7 +98,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-4">
           <div class="logo">
-            <a href="index-2.html">
+            <a href="index.html">
               <img src="images/logo.png" alt="Logo">
             </a>
           </div>
@@ -140,7 +140,7 @@
             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a  href="index-2.html">Home</a>
+                  <a  href="index.html">Home</a>
 
                 </li>
                 <li class="nav-item">
@@ -468,7 +468,7 @@
               <h6>Sitemap</h6>
             </div>
             <ul>
-              <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+              <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
               <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
               <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
               <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -563,6 +563,10 @@
 
 <!--====== BACK TO TP PART ENDS ======-->
 <script>
+  let token = localStorage.getItem('access_token');
+  if ( token === undefined || token === null) {
+    window.location.replace("login.html");
+  }
 
   fetch('http://localhost:8080/home/course/'+token,{
     method: 'GET',
@@ -582,6 +586,7 @@
             return data.json()
           })
           .then((dataJson) => {
+
             console.log(dataJson);
             document.getElementById('username').innerText = dataJson.data.username;
             document.getElementById('email').innerText = dataJson.data.email;
@@ -600,19 +605,29 @@
   req.addEventListener('load', function () {
     const res = JSON.parse(req.responseText);
     console.log(res.data);
+    let realTeacher;
+    for(index11 in res.data.teacher){
+      let oneHuman=res.data.teacher[index11];
+      const hasTrue= oneHuman.roles.some(function(checkTeacher) {
+        return checkTeacher.includes("TEACHER");
+      });
+      if (hasTrue){
+        realTeacher=oneHuman;
+      }
+    }
     document.getElementById("summery").innerHTML = res.data.courseSummery;
     document.getElementById("requirement").innerHTML = res.data.requirements;
     document.getElementById("course").innerHTML = res.data.name;
-    document.getElementById("teacher").innerHTML = res.data.teacher[0].name;
+    document.getElementById("teacher").innerHTML = realTeacher.name;
     document.getElementById("category").innerHTML = res.data.category.name;
     document.getElementById("headline").innerHTML = res.data.headline;
     document.getElementById("headline1").innerHTML = res.data.headline;
     document.getElementById("definition").innerHTML = res.data.definition;
-    document.getElementById("teacher-object").innerHTML = res.data.teacher[0].myObjective;
+    document.getElementById("teacher-object").innerHTML = realTeacher.myObjective;
     let pic = document.getElementById("coursePicture");
-    pic.innerHTML = `<img src="../static/images/${res.data.image}" alt="Course" >`;
+    pic.innerHTML = `<img src="http://localhost:8080/api/image/${res.data.image}" alt="Course" >`;
     let teachPic = document.getElementById("teacherPic");
-    teachPic.innerHTML = `<img src="../static/images/${res.data.teacher[0].picture}"width="40px" height="40px" alt="Course" >`;
+    teachPic.innerHTML = `<img src="http://localhost:8080/api/image/${realTeacher.picture}"width="40px" height="40px" alt="Course" >`;
 
 
 
@@ -623,14 +638,14 @@
     document.getElementById("price").setAttribute("myCourseId",res.data.price);
 
     let temp3 = document.getElementById("teacher-foto");
-    temp3.innerHTML=`<img src="../static/images/${res.data.teacher[0].picture}" width="170px" height="140px" alt="Instructor">`
+    temp3.innerHTML=`<img src="http://localhost:8080/api/image/${realTeacher.picture}" width="170px" height="140px" alt="Instructor">`
 
     let temp2 = document.getElementById("teacher-link");
     let socialLinks = [
-      { name: "facebook", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.facebook },
-      { name: "twitter", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.twitter },
-      { name: "google", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.google },
-      { name: "instagram", link: res.data.teacher[0].socialMedia && res.data.teacher[0].socialMedia.instagram }
+      { name: "facebook", link: realTeacher.socialMedia && realTeacher.socialMedia.facebook },
+      { name: "twitter", link: realTeacher.socialMedia && realTeacher.socialMedia.twitter },
+      { name: "google", link: realTeacher.socialMedia && realTeacher.socialMedia.google },
+      { name: "instagram", link: realTeacher.socialMedia && realTeacher.socialMedia.instagram }
     ];
 
 // Generate the social media icons based on the links
@@ -642,8 +657,8 @@
     }
 
     temp2.innerHTML = `
-    <a href="teachers-singel.html?teacherId=${res.data.teacher[0].id}"><h5>${res.data.teacher[0].name}</h5></a>
-    <span>${res.data.teacher[0].profession}</span>
+    <a href="teachers-singel.html?teacherId=${realTeacher.id}"><h5>${realTeacher.name}</h5></a>
+    <span>${realTeacher.profession}</span>
     <ul class="social">
         ${socialIcons}
     </ul>
@@ -651,30 +666,23 @@
 
     let temp4 = document.getElementById("comments");
     let str4 ="<ul>";
-
-    for (key1 in res.data.comments){
+    let array = res.data.comments.reverse();
+    for (key1 in array){
       str4+=`<li>
                       <div class="singel-reviews">
                         <div class="reviews-author">
                           <div class="author-thum">
-<!--                            <img src="../static/images/${res.data.comments[key1]}" alt="Reviews">-->
+                            <img src="images/unknown.png" width="35px" height="35px" alt="Reviews">
                           </div>
                           <div class="author-name">
-                            <h6>${res.data.comments[key1].personName}</h6>
-                            <span>${res.data.comments[key1].date}</span>
+                            <h6>${array[key1].personName}</h6>
+                            <span>${array[key1].date}</span>
                           </div>
                         </div>
                         <div class="reviews-description pt-20">
-                          <p>${res.data.comments[key1].text}.</p>
+                          <p>${array[key1].text}.</p>
                           <div class="rating">
-                            <ul>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                            </ul>
-                            <span>/ 5 Star</span>
+
                           </div>
                         </div>
                       </div> <!-- singel reviews -->
@@ -686,7 +694,7 @@
         let str = "";
 
         for (key in res.data.contents) {
-            console.log('tushyapdi')
+            // console.log('tushyapdi')
             str += `<div class="card">
       <div class="card-header" id="headingOne">
       <a href="#" data-toggle="collapse" data-target="#collapse${key}"
@@ -742,6 +750,16 @@
             let count =0;
             for (let indexNumber of mySet ) {
               const recommendCourse = dataJson.data[indexNumber];
+              let recTeacher ;
+              for(index11 in recommendCourse.teacher) {
+                let oneHuman = recommendCourse.teacher[index11];
+                const hasTrue = oneHuman.roles.some(function (checkTeacher) {
+                  return checkTeacher.includes("TEACHER");
+                });
+                if (hasTrue) {
+                  recTeacher = oneHuman;
+                }
+              }
               if (count<3) {
                 var outerDiv = document.createElement("div");
                 outerDiv.classList.add("singel-makelike", "mt-20");
@@ -749,7 +767,7 @@
                 var imageDiv = document.createElement("div");
                 imageDiv.classList.add("image");
                 var image = document.createElement("img");
-                let picture = '../static/images/'+recommendCourse.image;
+                let picture = 'http://localhost:8080/api/image/'+recommendCourse.image;
 
                 image.src= picture;
                 image.width=140;
@@ -806,7 +824,7 @@
                 image.classList.add('image');
                 const img = document.createElement('img');
 
-                img.src = '../static/images/'+recommendCourse.image;
+                img.src = 'http://localhost:8080/api/image/'+recommendCourse.image;
                 img.alt = 'course-Avatar';
                 img.height=277;
                 img.width=370;
@@ -853,7 +871,7 @@
                 const teacherThum = document.createElement('div');
                 teacherThum.classList.add('thum');
                 const teacherImg = document.createElement('img');
-                teacherImg.src = '../static/images/'+recommendCourse.teacher[0].picture;
+                teacherImg.src = 'http://localhost:8080/api/image/'+recTeacher.picture;
                 teacherImg.alt = 'avatar';
                 teacherThum.appendChild(teacherImg);
 
@@ -861,7 +879,7 @@
                 teacherName.classList.add('name');
                 const teacherNameLink = document.createElement('a');
                 const teacherNameH6 = document.createElement('h6');
-                teacherNameH6.textContent = recommendCourse.teacher[0].name;
+                teacherNameH6.textContent = recTeacher.name;
                 teacherNameLink.appendChild(teacherNameH6);
                 teacherName.appendChild(teacherNameLink);
 
@@ -933,7 +951,7 @@
 
   function getInformationFromService() {
     const courseId =document.getElementById("hiddenVar").getAttribute("myCourseId");
-    console.log('idId :'+courseId);
+    // console.log('idId :'+courseId);
 
     var options = {year: 'numeric', month: 'long', day: 'numeric'};
     var today = new Date().toLocaleDateString('en-US', options);
@@ -956,6 +974,7 @@
     document.getElementById("inputId1").value="";
     document.getElementById("inputId2").value="";
     document.getElementById("commentId").value="";
+    location.reload();
   }
 </script>
 
@@ -964,7 +983,7 @@
     const token = localStorage.getItem('access_token');
     if (token) {
       localStorage.removeItem('access_token');
-      window.location.href = 'index-2.html';
+      window.location.href = 'index.html';
     }
   }
 </script>

@@ -96,7 +96,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4">
                     <div class="logo">
-                        <a href="index-2.html">
+                        <a href="index.html">
                             <img src="images/logo.png" alt="Logo">
                         </a>
                     </div>
@@ -137,7 +137,7 @@
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <a  href="index-2.html">Home</a>
+                                    <a  href="index.html">Home</a>
 
                                 </li>
                                 <li class="nav-item">
@@ -355,7 +355,7 @@
                             <h6>Sitemap</h6>
                         </div>
                         <ul>
-                            <li><a href="index-2.html"><i class="fa fa-angle-right"></i>Home</a></li>
+                            <li><a href="index.html"><i class="fa fa-angle-right"></i>Home</a></li>
                             <li><a href="about.html"><i class="fa fa-angle-right"></i>About us</a></li>
                             <li><a href="courses.html"><i class="fa fa-angle-right"></i>Courses</a></li>
                             <li><a href="blog.html"><i class="fa fa-angle-right"></i>News</a></li>
@@ -484,7 +484,7 @@
                 thumDiv.setAttribute('class', 'thum');
 
                 const imgTag = document.createElement('img');
-                let str2 = '../static/images/' + oneBlog.picture;
+                let str2 = 'http://localhost:8080/api/image/' + oneBlog.picture;
                 imgTag.setAttribute('src', str2);
                 imgTag.setAttribute('width', "92px");
                 imgTag.setAttribute('height', "92px");
@@ -539,7 +539,7 @@
             element.appendChild(numberComments);
 
             let picTg = document.getElementById('blogPicture');
-            picTg.innerHTML = `<img src="../static/images/${dataJson.data.picture}"width="770px" height="470px" alt="Course" >`;
+            picTg.innerHTML = `<img src="http://localhost:8080/api/image/${dataJson.data.picture}"width="770px" height="470px" alt="Course" >`;
 
             let blogDate = dataJson.data.date;
 
